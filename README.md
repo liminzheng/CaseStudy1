@@ -1,7 +1,7 @@
 # Case Study 1
-### This repo is for the case study 1 of course 6306 doing data science.
-### Assume that the CEO and CFO gave the data and directive to report any interesting finding that you may uncover through analysis. Ingore the missing values.
-### Cover following questions in the report.
+### This repo is for the case study 1 of course 6306 Doing Data Science.
+#### Assume that the CEO and CFO gave the data and directive to report any interesting finding that you may uncover through analysis. Ingore the missing values.
+#### Cover following questions in the report.
 1.	How many breweries are present in each state?
 2.	Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
 3.	Report the number of NA's in each column.
