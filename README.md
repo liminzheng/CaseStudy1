@@ -1,5 +1,6 @@
-# Case Study 1
-### This repo is for the case study 1 of course 6306 Doing Data Science.
+## DDS---Case Study 1
+Team: Linda Eliasen / Limin Zheng 
+Our working repository for the project.
 #### Assume that the CEO and CFO gave the data and directive to report any interesting finding that you may uncover through analysis. Ingore the missing values.
 #### Cover following questions in the report.
 1.	How many breweries are present in each state?
