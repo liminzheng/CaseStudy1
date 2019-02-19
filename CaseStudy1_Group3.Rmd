@@ -19,7 +19,59 @@ knitr::opts_chunk$set(echo = TRUE)
 7.	Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
 ```{r echo=TRUE}
 #load beers and breweries data into r. 
-
+beers <- read.csv("Beers.csv", header = TRUE, sep = ",")
+breweries <- read.csv("Breweries.csv", header=TRUE, sep = ",")
+#check how many breweries are present in each state
+library(dplyr)
+brewperstate <- breweries %>% group_by(State) %>% summarize(n=n())
+head(brewperstate)
 ```
 
+```{r}
+#outer merge the beers data with breweries data.
+library(tidyr)
+combine = merge(beers,breweries, by.x = "Brewery_id", by.y = "Brew_ID", all = TRUE)
+#check the first 6 rows of combined data.
+head(combine)
+#check the last 6 rows of combined data.
+tail(combine)
+```
+
+```{r echo=TRUE}
+#Report the number of NA's in each column.
+na.col <- colSums(is.na(combine))
+na.col
+#drop the rows with NA.
+combine.clean = drop_na(combine)
+write.csv(combine.clean, "combine.clean.csv")
+```
+
+```{r echo=TRUE}
+#Get the median alcohol content(ABV) for each state. 
+ABV <- aggregate(ABV~State, data=combine.clean, median)
+#Get the median international bitterness unit(IBU) for each state.
+IBU <- aggregate(IBU~State, data=combine.clean, median)
+#combine the ABV, IBU data into a dataframe by states
+ABV.IBU <- merge(ABV,IBU, by = "State", all = TRUE)
+#Plot a bar chart to compare.
+library(ggplot2)
+ggplot(ABV.IBU, aes(x=reorder(State, -ABV),y=ABV, fill=IBU))+labs(title="Plot of ABV by state", x="State", y="ABV")+geom_bar(stat="identity") + theme_bw() +theme(axis.text.x=element_text(angle=90, size = 7)) +theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+#get the state of maximun ABV
+combine.clean[which(combine.clean$ABV == max(combine.clean$ABV)), "State"]
+#get the state of maximum IBU
+combine.clean[which(combine.clean$IBU == max(combine.clean$IBU)), "State"]
+```
+
+```{r}
+summary(combine$ABV)
+```
+
+```{r}
+ggplot(combine.clean, aes(ABV, IBU, color = State)) +
+  geom_point(shape = 16, size = 3, show.legend = FALSE) +
+  theme_minimal()
+```
 
